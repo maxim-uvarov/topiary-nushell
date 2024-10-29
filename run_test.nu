@@ -5,6 +5,9 @@ use std assert
 const temp_file = 'test/temp.nu'
 let files = glob test/input_*.nu
 
+$env.TOPIARY_CONFIG_FILE = (pwd | path join languages.ncl)
+$env.TOPIARY_LANGUAGE_DIR = (pwd | path join languages)
+
 for f in $files {
   print $"Testing: (ansi green_bold)($f)(ansi reset)"
   cp $f $temp_file

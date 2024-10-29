@@ -28,5 +28,4 @@ jobs:
           cd topiary
           cargo install --path topiary-cli
       - run: |
-          cd ..
           nu run_test.nu
