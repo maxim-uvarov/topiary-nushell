@@ -15,5 +15,5 @@ jobs:
       - uses: hustcer/setup-nu@main
         with:
           version: "*"
-      - run: version; print $"(char nl)Dir contents:(char nl)"; ls ((which nu).path.0 | path dirname)
+      - run: nu --version
       - run: nu run_test.nu
