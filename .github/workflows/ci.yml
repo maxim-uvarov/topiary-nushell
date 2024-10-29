@@ -16,4 +16,17 @@ jobs:
         with:
           version: "*"
       - run: nu --version
-      - run: nu run_test.nu
+      - name: Setup Rust toolchain and cache
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Clone topiary
+        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+        with:
+          branch: 'main'
+          owner: 'tweag'
+          repository: 'topiary'
+      - run: |
+          cd topiary
+          cargo install --path topiary-cli
+      - run: |
+          cd ..
+          nu run_test.nu
