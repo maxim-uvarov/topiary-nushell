@@ -1,0 +1,19 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+name: continuous-integration
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Nushell formatter test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hustcer/setup-nu@main
+        with:
+          version: "*"
+      - run: version; print $"(char nl)Dir contents:(char nl)"; ls ((which nu).path.0 | path dirname)
+      - run: nu run_test.nu
