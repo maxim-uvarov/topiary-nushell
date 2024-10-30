@@ -1,3 +1,4 @@
+;; leaf nodes are left intact
 [
   (cell_path)
   (comment)
@@ -15,6 +16,7 @@
   (val_variable)
 ] @leaf
 
+;; keep empty lines TODO: grammar fix required
 [
   (assignment)
   (comment)
@@ -33,10 +35,14 @@
   ";"
   "alias"
   "const"
+  "do"
   "error"
+  "export"
   "export-env"
+  "hide-env"
   "let"
   "mut"
+  "not"
   "return"
   "source"
   "try"
@@ -53,9 +59,14 @@
   (comment)
 ] @prepend_space @append_space
 
+;; add spaces to left & right sides of operators
+(pipe_element
+  "|" @prepend_space @append_space
+)
+
 (expr_binary
   lhs: _ @append_space
-  opr: _
+  opr: _ @append_spaced_softline ; multiline in expr_parenthesized
   rhs: _ @prepend_space
 )
 
@@ -66,16 +77,16 @@
 )
 
 (where_command
-  lhs: _ @append_space
-  opr: _
-  rhs: _ @prepend_space
+  opr: _ @prepend_space @append_space
 )
 
+;; indentation
 [
   "["
-  "{"
   "("
 ] @append_indent_start @append_empty_softline
+
+"{" @append_indent_start
 
 [
   "]"
@@ -83,50 +94,79 @@
   ")"
 ] @prepend_indent_end @prepend_empty_softline
 
+; change line happens after || for closure
+(
+  "{" @append_empty_softline
+  .
+  (parameter_pipes)? @do_nothing
+)
+
+;; space/new-line between parameters
+(parameter_pipes
+  (
+    (parameter) @append_space
+    .
+    (parameter)
+  )?
+) @append_space @append_spaced_softline
+
+(parameter_bracks
+  (parameter) @append_space
+  .
+  (parameter) @prepend_empty_softline
+)
+
+(parameter
+  param_long_flag: _? @prepend_space
+  .
+  flag_capsule: _? @prepend_space
+)
+
+;; declarations
 (decl_def
-  "export"? @append_space
   (long_flag)? @prepend_space @append_space
   quoted_name: _? @prepend_space @append_space
   unquoted_name: _? @prepend_space @append_space
-  (parameter_bracks)?
   (returns)?
   (block) @prepend_space
 )
 
 (decl_use
-  "export"? @append_space
   module: _? @prepend_space @append_space
   import_pattern: _? @prepend_space @append_space
 )
 
 (decl_extern
-  "export"? @append_space
+  "export"?
   quoted_name: _? @prepend_space @append_space
   unquoted_name: _? @prepend_space @append_space
-  (parameter_bracks)?
   (block) @prepend_space
 )
 
 (decl_module
-  "export"? @append_space
+  "export"?
   quoted_name: _? @prepend_space @append_space
   unquoted_name: _? @prepend_space @append_space
-  (block) @prepend_space
+  (block)? @prepend_space
 )
 
+;; forced new-line
 [
   "\n"
   (decl_def)
   (decl_export)
   (decl_extern)
-  (decl_use)
   (shebang)
 ] @append_hardline
 
-(pipe_element
-  "|" @prepend_space @append_space
+; TODO: dedup workaround for comments followed by \n
+(
+  (comment) @append_empty_softline
+  .
+  "\n"? @do_nothing
 )
 
+;; control flow
 (ctrl_if
   "if" @append_space
   condition: _ @append_space
@@ -143,10 +183,6 @@
   condition: _ @append_space
 )
 
-(match_guard
-  "if" @prepend_space @append_space
-)
-
 (ctrl_match
   "match" @append_space
   scrutinee: _? @append_space
@@ -154,6 +190,11 @@
   (default_arm)? @prepend_spaced_softline
 )
 
+(match_guard
+  "if" @prepend_space @append_space
+)
+
+;; data structures
 (command_list
   (cmd_identifier) @append_space @prepend_spaced_softline
 )
@@ -165,6 +206,12 @@
   redir: (_
     file_path: _? @prepend_space
   )? @prepend_space
+)
+
+(command
+  arg_str: _
+  .
+  (expr_parenthesized)? @do_nothing
 )
 
 (list_body
@@ -187,20 +234,4 @@
 
 (record_body
   entry: (record_entry) @append_space @prepend_spaced_softline
-)
-
-(
-  (comment) @append_empty_softline
-  .
-  "\n"? @do_nothing
-)
-
-[
-  (parameter_pipes)
-] @append_space @prepend_empty_softline
-
-(parameter_bracks
-  (parameter) @append_space
-  .
-  (parameter) @prepend_empty_softline
 )

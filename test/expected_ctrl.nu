@@ -3,7 +3,7 @@ for i in [1 2 3] {
   # if
   if (true or false) {
     print "break"; break # break
-  } else {
+  } else if not false {
     print "continue"; continue # continue
   }
   return 1 # return
@@ -18,7 +18,7 @@ let foo = { name: 'bar' count: 7 }
 match $foo {
   { name: 'bar' count: $it } if $it < 5 => ($it + 3), # match arm comment
   # match comment
-  { name: 'bar' count: $it } if $it >= 5 => ($it + 7),
+  { name: 'bar' count: $it } if not ($it >= 5) => ($it + 7),
   _ => {exit 0}
 }
 # while

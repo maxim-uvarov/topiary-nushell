@@ -1,4 +1,5 @@
 # Add nushell support to Topiary (WIP)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/blindfs/topiary-nushell/ci.yml?branch=main)](https://github.com/blindfs/topiary-nushell/actions)
 
 * [Topiary](https://github.com/tweag/topiary): tree-sitter based uniform formatter
 * This repo contains:

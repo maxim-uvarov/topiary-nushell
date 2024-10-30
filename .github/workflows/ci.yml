@@ -24,8 +24,9 @@ jobs:
           branch: 'main'
           owner: 'tweag'
           repository: 'topiary'
-      - run: |
+      - name: Install topiary-cli
+        run: |
           cd topiary
           cargo install --path topiary-cli
-      - run: |
-          nu run_test.nu
+      - name: Run tests
+        run: nu run_test.nu

@@ -4,7 +4,6 @@ use constants.nu [
   colors
   get_icon_by_app_name
 ]
-
 const animate_frames = 30
 def modify_args_per_workspace [
   sid: string

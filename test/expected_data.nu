@@ -1,4 +1,4 @@
-exportconst config = {
+export const config = {
   default: {
     align: center
     updates: when_shown

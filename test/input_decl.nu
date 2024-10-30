@@ -2,8 +2,24 @@
 export extern hello [name: string] {
     $"hello ($name)!"
 }
-extern hi [name: string] {
+extern hi [name: string --long (-s) # flags
+] {
     $"hi ($name)!"
+}
+
+# env
+hide-env   ABC
+with-env {ABC: 'hello'} {
+do {| | print $env.ABC
+  }
+}
+
+# closure
+let cls = {| foo bar  baz|
+  (
+    $foo +
+    $bar + $baz
+  )
 }
 
 # decl_export

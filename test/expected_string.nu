@@ -6,6 +6,9 @@ const help_preview_cmd = "try {help {}} catch {'custom command or alias'}"
 const external_tldr_cmd = "try {tldr -C {}} catch {'No doc yet'}"
 const hybrid_help_cmd = (
   "Multiline
-   string" + ($external_tldr_cmd | str replace '{}' '(foo)') + "another multiline
-  string" + ($help_preview_cmd | str replace '{}' '(bar)')
+   string" +
+  ($external_tldr_cmd | str replace '{}' '(foo)') +
+  "another multiline
+  string" +
+  ($help_preview_cmd | str replace '{}' '(bar)')
 )
