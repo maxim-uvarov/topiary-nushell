@@ -33,29 +33,46 @@
 [
   ":"
   ";"
-  "alias"
-  "const"
-  "do"
-  "error"
-  "export"
-  "export-env"
-  "hide-env"
-  "let"
-  "mut"
-  "not"
-  "return"
-  "source"
-  "try"
-  "where"
 ] @append_space
 
 [
   "->"
   "="
   "=>"
+  "alias"
+  "as"
+  "break"
   "catch"
+  "const"
+  "continue"
+  "def"
+  "do"
   "else"
+  "error"
+  "export"
+  "export-env"
+  "extern"
+  "for"
+  "hide"
+  "hide-env"
+  "if"
+  "in"
+  "let"
+  "loop"
   "make"
+  "match"
+  "module"
+  "mut"
+  "not"
+  "new"
+  "overlay"
+  "return"
+  "source"
+  "source-env"
+  "try"
+  "use"
+  "where"
+  "while"
   (comment)
 ] @prepend_space @append_space
 
@@ -78,6 +95,22 @@
 
 (where_command
   opr: _ @prepend_space @append_space
+)
+
+;; special flags
+(overlay_use
+  (short_flag)? @append_space
+  (long_flag)? @append_space
+)
+
+(ctrl_error
+  (short_flag)? @append_space
+  (long_flag)? @append_space
+)
+
+(ctrl_do
+  (short_flag)? @append_space
+  (long_flag)? @append_space
 )
 
 ;; indentation

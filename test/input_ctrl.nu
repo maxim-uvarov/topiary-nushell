@@ -23,8 +23,11 @@ match $foo {
 }
 # while
 mut x = 0; while $x < 10 { $x = $x + 1 }; $x # while comment
+# loop
+loop { if $x > 10 { break };
+  $x = $x + 1 }
 # try
 try {
  # error
-  error make {
+  error make -u  {
     msg: 'Some error info' }}; print 'Resuming'

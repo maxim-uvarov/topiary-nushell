@@ -13,7 +13,7 @@ extern hi [
 # env
 hide-env ABC
 with-env { ABC: 'hello' } {
-  do {||
+  do -i --env {||
     print $env.ABC
   }
 }

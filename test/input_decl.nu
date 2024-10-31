@@ -10,7 +10,7 @@ extern hi [name: string --long (-s) # flags
 # env
 hide-env   ABC
 with-env {ABC: 'hello'} {
-do {| | print $env.ABC
+do -i --env {| | print $env.ABC
   }
 }
 
