@@ -7,6 +7,5 @@ ls | get -i name
   ls
   | get -i name
 )
-# TODO: fix this
-# ^$cmd --arg1 -arg2 arg=value arg=($arg3)
+^$cmd --arg1 -arg2 arg=value arg=($arg3)
 cat unknown.txt o+e> (null-device)

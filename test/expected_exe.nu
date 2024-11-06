@@ -35,10 +35,8 @@ def modify_args_per_workspace [
     } else {
       [
         background.drawing=on
-        label=
-        ($icons)
-        label.highlight=
-        ($extra.highlight)
+        label=($icons)
+        label.highlight=($extra.highlight)
         padding_left=2
         padding_right=2
       ]
@@ -71,6 +69,6 @@ match $env.SENDER {
   _ => {
     # invisible item to store last focused sid
     let last_sid = (sketchybar --query $env.NAME | from json | get label.value)
-    sketchybar --animate tanh $animate_frames ... (workspace_modification_args $env.NAME $last_sid)
+    sketchybar --animate tanh $animate_frames ...(workspace_modification_args $env.NAME $last_sid)
   }
 }
