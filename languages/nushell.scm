@@ -16,19 +16,8 @@
   (val_variable)
 ] @leaf
 
-;; keep empty lines TODO: grammar fix required
-[
-  (assignment)
-  (comment)
-  (decl_def)
-  (decl_export)
-  (decl_extern)
-  (decl_module)
-  (decl_use)
-  (pipeline)
-  (stmt_const)
-  (stmt_let)
-] @allow_blank_line_before
+;; keep empty lines
+(_) @allow_blank_line_before
 
 [
   ":"
@@ -78,7 +67,7 @@
 
 ;; add spaces to left & right sides of operators
 (pipe_element
-  "|" @prepend_space @append_space
+  "|" @prepend_space @append_space @prepend_empty_softline
 )
 
 (expr_binary
@@ -185,19 +174,23 @@
 
 ;; forced new-line
 [
-  "\n"
   (decl_def)
   (decl_export)
   (decl_extern)
   (shebang)
 ] @append_hardline
 
-; TODO: dedup workaround for comments followed by \n
-(
-  (comment) @append_empty_softline
-  .
-  "\n"? @do_nothing
-)
+[
+  (comment)
+  (pipeline)
+  (overlay_use)
+  (overlay_hide)
+  (overlay_list)
+  (overlay_new)
+  (hide_env)
+  (hide_mod)
+  (decl_use)
+] @append_empty_softline
 
 ;; control flow
 (ctrl_if

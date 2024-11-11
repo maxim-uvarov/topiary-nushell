@@ -2,13 +2,14 @@
 for i in [1 2 3] {
   # if
   if (true or false) {
-    print "break"; break # break
+    print "break";
+    break # break
   } else if not false {
-    print "continue"; continue # continue
+    print "continue";
+    continue # continue
   }
   return 1 # return
-}
-# alias
+} # alias
 alias ll = ls -l # alias comment
 # where
 ls | where $in.name == 'foo'
@@ -27,11 +28,11 @@ mut x = 0; while $x < 10 {$x = $x + 1}; $x # while comment
 loop {
   if $x > 10 { break };
   $x = $x + 1
-}
-# try
+} # try
 try {
   # error
   error make -u {
     msg: 'Some error info'
   }
-}; print 'Resuming'
+};
+print 'Resuming'

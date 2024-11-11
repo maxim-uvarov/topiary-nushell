@@ -17,6 +17,7 @@ export const config = {
     background.border_width: 1
     background.border_color: $colors.bg
   }
+
   workspace_default_args: {
     icon.font.size: 12
     label.font.size: 17
@@ -32,6 +33,7 @@ export const config = {
     background.shadow.color: $colors.bg
     background.shadow.distance: 3
   }
+
   plugin_configs: [
     {
       name: ws_listener
@@ -244,5 +246,6 @@ export const config = {
     }
   ]
 }
+
 const table = [[a b]; [1 2] [2 [4 4]]]
 const table_no_row = [[a b]; ]
