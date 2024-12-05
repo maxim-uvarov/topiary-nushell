@@ -190,6 +190,7 @@
   (hide_env)
   (hide_mod)
   (decl_use)
+  (stmt_source)
 ] @append_empty_softline
 
 ;; control flow
