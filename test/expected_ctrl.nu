@@ -11,8 +11,7 @@ for i in [1 2 3] {
 # alias
 alias ll = ls -l # alias comment
 # where
-ls
-| where $in.name == 'foo'
+ls | where $in.name == 'foo'
 | where {|e| $e.item.name !~ $'^($e.index + 1)'}
 # match
 let foo = { name: 'bar' count: 7 }

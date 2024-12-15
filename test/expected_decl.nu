@@ -21,8 +21,7 @@ with-env { ABC: 'hello' } {
 let cls = {|foo bar baz|
   (
     $foo +
-    $bar +
-    $baz
+    $bar + $baz
   )
 }
 

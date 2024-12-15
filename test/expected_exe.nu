@@ -14,11 +14,9 @@ def modify_args_per_workspace [
 ]: nothing -> list<string> {
   let icons = (
     aerospace list-windows --workspace $sid --json
-    | from json
-    | get app-name
+    | from json | get app-name
     | each {$in | get_icon_by_app_name}
-    | uniq
-    | sort
+    | uniq | sort
     | str join ' '
   )
   let extra = (

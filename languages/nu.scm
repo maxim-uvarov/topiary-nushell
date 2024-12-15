@@ -18,15 +18,45 @@
 ;; keep empty lines
 (_) @allow_blank_line_before
 
+;; TODO: temp workaround for the whitespace issue
 [
   ":"
   ";"
+  "do"
+  "if"
+  "match"
+  "try"
+  "while"
 ] @append_space
 
-;; TODO: temp solution for the whitespace issue
 [
   "="
+  (match_guard)
 ] @prepend_space
+
+(assignment
+  opr: _
+  rhs:
+  (pipeline
+    (pipe_element
+      (val_string
+        (raw_string_begin)
+      )
+    )
+  ) @prepend_space
+)
+
+(
+  "="
+  .
+  (pipeline
+    (pipe_element
+      (val_string
+        (raw_string_begin)
+      )
+    )
+  ) @prepend_space
+)
 
 [
   "->"
@@ -36,7 +66,6 @@
   "catch"
   "const"
   "def"
-  "do"
   "else"
   "error"
   "export"
@@ -45,12 +74,10 @@
   "for"
   "hide"
   "hide-env"
-  "if"
   "in"
   "let"
   "loop"
   "make"
-  "match"
   "module"
   "mut"
   "new"
@@ -58,35 +85,17 @@
   "return"
   "source"
   "source-env"
-  "try"
   "use"
   "where"
-  "while"
 ] @prepend_space @append_space
 
 (pipeline
-  "|" @prepend_space @append_space @prepend_empty_softline
+  "|" @append_space @prepend_input_softline
 )
 
 ;; add spaces to left & right sides of operators
 (expr_binary
-  opr: _ @append_space @prepend_space
-)
-
-(expr_parenthesized
-  (pipeline
-    (pipe_element
-      (expr_binary
-        opr: _ @append_empty_softline
-      )
-    )
-  )
-)
-
-(expr_binary
-  (expr_binary
-     opr: _ @append_empty_softline
-  )
+  opr: _ @append_input_softline @prepend_input_softline
 )
 
 (assignment
@@ -94,7 +103,7 @@
 )
 
 (where_command
-  opr: _ @prepend_space @append_space
+  opr: _ @append_input_softline @prepend_input_softline
 )
 
 ;; special flags
@@ -188,7 +197,7 @@
 ;; new-line
 (comment) @prepend_input_softline @append_hardline
 
-;; TODO: substantial slow down of duplicated rules
+;; TODO: substantial slow down by duplicated rules
 (nu_script
   (_)
   (_) @prepend_input_softline
@@ -237,13 +246,13 @@
 )
 
 (command
-  flag: _? @prepend_space
-  arg_str: _? @prepend_space
-  arg_spread: _? @prepend_space
-  arg: _? @prepend_space
+  flag: _? @prepend_input_softline
+  arg_str: _? @prepend_input_softline
+  arg_spread: _? @prepend_input_softline
+  arg: _? @prepend_input_softline
   redir: (_
-    file_path: _? @prepend_space
-  )? @prepend_space
+    file_path: _? @prepend_input_softline
+  )? @prepend_input_softline
 )
 
 (list_body

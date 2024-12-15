@@ -1,6 +1,5 @@
 # local command
-ls
-| get -i name
+ls | get -i name
 | length; ls # multiline command
 | length
 # external command
