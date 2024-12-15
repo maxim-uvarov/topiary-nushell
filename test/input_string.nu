@@ -11,3 +11,6 @@ const hybrid_help_cmd = ("Multiline
   string" +
   ($help_preview_cmd | str replace '{}' '(bar)')
 )
+mut  foo = 'foo bar'
+$foo  += 'baz'
+$foo  +=  r#'baz'#

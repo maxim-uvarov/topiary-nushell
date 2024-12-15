@@ -18,7 +18,7 @@
 ;; keep empty lines
 (_) @allow_blank_line_before
 
-;; TODO: temp workaround for the whitespace issue
+;; FIXME: temp workaround for the whitespace issue
 [
   ":"
   ";"
@@ -36,8 +36,7 @@
 
 (assignment
   opr: _
-  rhs:
-  (pipeline
+  rhs: (pipeline
     (pipe_element
       (val_string
         (raw_string_begin)
@@ -276,3 +275,4 @@
 (record_body
   entry: (record_entry) @append_space @prepend_spaced_softline
 )
+
