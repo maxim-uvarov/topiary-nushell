@@ -21,7 +21,8 @@ with-env { ABC: 'hello' } {
 let cls = {|foo bar baz|
   (
     $foo +
-    $bar + $baz
+    $bar +
+    $baz
   )
 }
 
@@ -38,6 +39,10 @@ def "hi there" [where: string]: nothing -> string {
 # decl_use
 use greetings.nu hello
 export use greetings.nu *
+use module [ foo bar ]
+use module [ "foo" "bar" ]
+use module [ foo "bar" ]
+use module [ "foo" bar ]
 
 # decl_module
 module greetings {

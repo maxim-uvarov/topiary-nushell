@@ -2,7 +2,6 @@
 [
   (cell_path)
   (comment)
-  (long_flag_equals_value)
   (shebang)
   (unquoted)
   (val_binary)
@@ -24,16 +23,18 @@
   ";"
 ] @append_space
 
+;; TODO: temp solution for the whitespace issue
+[
+  "="
+] @prepend_space
+
 [
   "->"
-  "="
   "=>"
   "alias"
   "as"
-  "break"
   "catch"
   "const"
-  "continue"
   "def"
   "do"
   "else"
@@ -52,7 +53,6 @@
   "match"
   "module"
   "mut"
-  "not"
   "new"
   "overlay"
   "return"
@@ -62,24 +62,35 @@
   "use"
   "where"
   "while"
-  (comment)
 ] @prepend_space @append_space
 
-;; add spaces to left & right sides of operators
-(pipe_element
+(pipeline
   "|" @prepend_space @append_space @prepend_empty_softline
 )
 
+;; add spaces to left & right sides of operators
 (expr_binary
-  lhs: _ @append_space
-  opr: _ @append_spaced_softline ; multiline in expr_parenthesized
-  rhs: _ @prepend_space
+  opr: _ @append_space @prepend_space
+)
+
+(expr_parenthesized
+  (pipeline
+    (pipe_element
+      (expr_binary
+        opr: _ @append_empty_softline
+      )
+    )
+  )
+)
+
+(expr_binary
+  (expr_binary
+     opr: _ @append_empty_softline
+  )
 )
 
 (assignment
-  lhs: _ @append_space
-  opr: _
-  rhs: _ @prepend_space
+  opr: _ @prepend_space
 )
 
 (where_command
@@ -106,9 +117,10 @@
 [
   "["
   "("
+  "...("
+  "...["
+  "...{"
 ] @append_indent_start @append_empty_softline
-
-"{" @append_indent_start
 
 [
   "]"
@@ -116,7 +128,8 @@
   ")"
 ] @prepend_indent_end @prepend_empty_softline
 
-; change line happens after || for closure
+;;; change line happens after || for closure
+"{" @append_indent_start
 (
   "{" @append_empty_softline
   .
@@ -172,26 +185,24 @@
   (block)? @prepend_space
 )
 
-;; forced new-line
-[
-  (decl_def)
-  (decl_export)
-  (decl_extern)
-  (shebang)
-] @append_hardline
+;; new-line
+(comment) @prepend_input_softline @append_hardline
 
-[
-  (comment)
-  (pipeline)
-  (overlay_use)
-  (overlay_hide)
-  (overlay_list)
-  (overlay_new)
-  (hide_env)
-  (hide_mod)
-  (decl_use)
-  (stmt_source)
-] @append_empty_softline
+;; TODO: substantial slow down of duplicated rules
+(nu_script
+  (_)
+  (_) @prepend_input_softline
+)
+
+(block
+  (_)
+  (_) @prepend_input_softline
+)
+
+(val_closure
+  (_)
+  (_) @prepend_input_softline
+)
 
 ;; control flow
 (ctrl_if
@@ -217,28 +228,22 @@
   (default_arm)? @prepend_spaced_softline
 )
 
-(match_guard
-  "if" @prepend_space @append_space
-)
-
 ;; data structures
 (command_list
-  [(cmd_identifier) (val_string)] @append_space @prepend_spaced_softline
+  [
+    (cmd_identifier)
+    (val_string)
+  ] @append_space @prepend_spaced_softline
 )
 
 (command
   flag: _? @prepend_space
   arg_str: _? @prepend_space
+  arg_spread: _? @prepend_space
   arg: _? @prepend_space
   redir: (_
     file_path: _? @prepend_space
   )? @prepend_space
-)
-
-(command
-  arg_str: _
-  .
-  (expr_parenthesized)? @do_nothing
 )
 
 (list_body
