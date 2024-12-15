@@ -1,7 +1,6 @@
 # local command
 ls | get -i name
-| length;
-ls # multiline command
+| length; ls # multiline command
 | length
 # external command
 ^git add (

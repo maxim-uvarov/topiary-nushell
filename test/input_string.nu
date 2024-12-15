@@ -8,5 +8,6 @@ const hybrid_help_cmd = ("Multiline
    string" +
   ($external_tldr_cmd | str replace '{}' '(foo)') +
   "another multiline
-  string" + ($help_preview_cmd | str replace '{}' '(bar)')
+  string" +
+  ($help_preview_cmd | str replace '{}' '(bar)')
 )

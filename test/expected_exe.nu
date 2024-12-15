@@ -3,6 +3,7 @@
 use constants.nu [
   colors
   get_icon_by_app_name
+  "foo bar"
 ]
 
 const animate_frames = 30
