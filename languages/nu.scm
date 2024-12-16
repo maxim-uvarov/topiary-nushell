@@ -32,6 +32,8 @@
 [
   "="
   (match_guard)
+  (short_flag)
+  (long_flag)
 ] @prepend_space
 
 (assignment
@@ -106,19 +108,13 @@
 )
 
 ;; special flags
-(overlay_use
-  (short_flag)? @append_space
-  (long_flag)? @append_space
-)
-
-(ctrl_error
-  (short_flag)? @append_space
-  (long_flag)? @append_space
-)
-
-(ctrl_do
-  (short_flag)? @append_space
-  (long_flag)? @append_space
+(_
+  [
+    (short_flag)
+    (long_flag)
+  ] @append_space
+  .
+  (_)
 )
 
 ;; indentation
