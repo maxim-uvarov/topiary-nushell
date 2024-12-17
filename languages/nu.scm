@@ -192,20 +192,25 @@
 ;; new-line
 (comment) @prepend_input_softline @append_hardline
 
-;; TODO: substantial slow down by duplicated rules
 (nu_script
-  (_)
-  (_) @prepend_input_softline
+  (_) @append_begin_scope
+  .
+  (_) @prepend_end_scope @prepend_empty_scoped_softline
+  (#scope_id! "consecutive_scope")
 )
 
 (block
-  (_)
-  (_) @prepend_input_softline
+  (_) @append_begin_scope
+  .
+  (_) @prepend_end_scope @prepend_empty_scoped_softline
+  (#scope_id! "consecutive_scope")
 )
 
 (val_closure
-  (_)
-  (_) @prepend_input_softline
+  (_) @append_begin_scope
+  .
+  (_) @prepend_end_scope @prepend_empty_scoped_softline
+  (#scope_id! "consecutive_scope")
 )
 
 ;; control flow
