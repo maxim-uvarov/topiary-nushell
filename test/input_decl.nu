@@ -10,8 +10,8 @@ extern hi [name: string --long (-s) # flags
 # env
 hide-env   ABC
 with-env {ABC: 'hello'} {
-do -i --env {| | print $env.ABC
-  }
+do -i --env {|foo, bar | print $env.ABC
+  } foo bar
 }
 
 # closure
@@ -28,8 +28,9 @@ $env.hello = 'hello'
 }
 
 # decl_def
-def "hi there" [where: string]: nothing -> string {
-    $"hi ($where)!"
+def "hi there" [where: string]: nothing -> record<foo: table<baz: float>,  bar: int> {
+  {foo: [["baz"]; [1.0]],
+    bar: 1}
 }
 
 # decl_use

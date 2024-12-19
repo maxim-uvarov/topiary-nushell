@@ -237,6 +237,10 @@
   (default_arm)? @prepend_spaced_softline
 )
 
+(ctrl_do
+  (_) @prepend_space
+)
+
 ;; data structures
 (command_list
   [
@@ -277,3 +281,9 @@
   entry: (record_entry) @append_space @prepend_spaced_softline
 )
 
+(collection_type
+  type: _ @append_delimiter
+  .
+  key: _ @prepend_space
+  (#delimiter! ",")
+)
