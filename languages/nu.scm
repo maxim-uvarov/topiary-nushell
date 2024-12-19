@@ -192,24 +192,26 @@
 ;; new-line
 (comment) @prepend_input_softline @append_hardline
 
+;; TODO: pseudo scope_id to cope with
+;; https://github.com/tree-sitter/tree-sitter/discussions/3967
 (nu_script
   (_) @append_begin_scope
   .
-  (_) @prepend_end_scope @prepend_empty_scoped_softline
+  (_) @prepend_end_scope @prepend_input_softline
   (#scope_id! "consecutive_scope")
 )
 
 (block
   (_) @append_begin_scope
   .
-  (_) @prepend_end_scope @prepend_empty_scoped_softline
+  (_) @prepend_end_scope @prepend_input_softline
   (#scope_id! "consecutive_scope")
 )
 
 (val_closure
   (_) @append_begin_scope
   .
-  (_) @prepend_end_scope @prepend_empty_scoped_softline
+  (_) @prepend_end_scope @prepend_input_softline
   (#scope_id! "consecutive_scope")
 )
 
