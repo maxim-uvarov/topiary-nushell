@@ -41,7 +41,7 @@
 (stmt_mut "=" @prepend_space)
 (stmt_const "=" @prepend_space)
 
-(param_value "=" @append_space)
+(param_value "=" @append_space @prepend_space)
 
 (assignment
   opr: _
@@ -145,7 +145,7 @@
   (parameter_pipes)? @do_nothing
 )
 
-;; space/new-line between parameters
+;; space/newline between parameters
 (parameter_pipes
   (
     (parameter) @append_space
@@ -189,7 +189,7 @@
 (decl_extern (_) @prepend_space)
 (decl_module (_) @prepend_space)
 
-;; new-line
+;; newline
 (comment) @prepend_input_softline @append_hardline
 
 ;; TODO: pseudo scope_id to cope with
@@ -219,6 +219,8 @@
 (ctrl_if
   "if" @append_space
   condition: _ @append_space
+  then_branch: _
+  "else"? @prepend_input_softline
 )
 
 (ctrl_for

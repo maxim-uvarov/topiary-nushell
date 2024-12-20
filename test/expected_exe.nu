@@ -56,7 +56,8 @@ def workspace_modification_args [
   # use listener's label to store last focused space id
   let focused_sid = (aerospace list-workspaces --focused)
   let ids_to_modify = (
-    if ($last_sid | is-empty) {(aerospace list-workspaces --all | lines)} else {
+    if ($last_sid | is-empty) {(aerospace list-workspaces --all | lines)}
+    else {
       [$focused_sid $last_sid]
     }
   )
