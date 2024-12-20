@@ -2,11 +2,9 @@
 export extern hello [name: string] {
     $"hello ($name)!"
 }
+# decl_extern no body block
 extern hi [name: string --long (-s) # flags
-] {
-    $"hi ($name)!"
-}
-
+]
 # env
 hide-env   ABC
 with-env {ABC: 'hello'} {

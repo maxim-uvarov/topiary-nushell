@@ -36,6 +36,10 @@
   (long_flag)
 ] @prepend_space
 
+(param_value
+  "=" @append_space
+)
+
 (assignment
   opr: _
   rhs: (pipeline
@@ -171,22 +175,15 @@
 )
 
 (decl_use
-  module: _? @prepend_space @append_space
-  import_pattern: _? @prepend_space @append_space
+  (_) @prepend_space
 )
 
 (decl_extern
-  "export"?
-  quoted_name: _? @prepend_space @append_space
-  unquoted_name: _? @prepend_space @append_space
-  (block) @prepend_space
+  (_) @prepend_space
 )
 
 (decl_module
-  "export"?
-  quoted_name: _? @prepend_space @append_space
-  unquoted_name: _? @prepend_space @append_space
-  (block)? @prepend_space
+  (_) @prepend_space
 )
 
 ;; new-line

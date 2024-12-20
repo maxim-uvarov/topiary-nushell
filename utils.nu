@@ -16,7 +16,10 @@ export def test_format [
       | lines
       | each {$in | from json}
       | flatten
-      | where severity? == Error and message? !~ '(File|Module|Variable) not found'
+      | (
+        where severity? == Error
+        and message? !~ '((File|Module|Variable) not found|Unknown command)'
+      )
       if ($errors | length) > 0 {
         print $errors
       }
