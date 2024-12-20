@@ -7,5 +7,5 @@ ls | get -i name
   ls
   | get -i name
 )
-^$cmd --arg1 -arg2 arg=value arg=($arg3)
+FOO=BAR BAR=BAZ ^$cmd --arg1=val1 -arg2 arg=value arg=($arg3)
 cat unknown.txt o+e> (null-device)

@@ -27,14 +27,19 @@
   "match"
   "try"
   "while"
+  (env_var)
 ] @append_space
 
 [
-  "="
   (match_guard)
   (short_flag)
   (long_flag)
 ] @prepend_space
+
+(decl_alias "=" @prepend_space)
+(stmt_let "=" @prepend_space)
+(stmt_mut "=" @prepend_space)
+(stmt_const "=" @prepend_space)
 
 (param_value
   "=" @append_space
@@ -112,7 +117,7 @@
 )
 
 ;; special flags
-(_
+(
   [
     (short_flag)
     (long_flag)
@@ -172,6 +177,16 @@
   unquoted_name: _? @prepend_space @append_space
   (returns)?
   (block) @prepend_space
+)
+
+(returns
+  ":"? @do_nothing
+) @prepend_space
+
+(returns
+  type: _ @append_space
+  .
+  type: _
 )
 
 (decl_use
