@@ -41,9 +41,7 @@
 (stmt_mut "=" @prepend_space)
 (stmt_const "=" @prepend_space)
 
-(param_value
-  "=" @append_space
-)
+(param_value "=" @append_space)
 
 (assignment
   opr: _
@@ -268,10 +266,11 @@
   arg_str: _? @prepend_input_softline
   arg_spread: _? @prepend_input_softline
   arg: _? @prepend_input_softline
-  redir: (_
-    file_path: _? @prepend_input_softline
-  )? @prepend_input_softline
 )
+
+(redirection
+  file_path: _? @prepend_input_softline
+) @prepend_input_softline
 
 (list_body
   entry: _ @append_space
