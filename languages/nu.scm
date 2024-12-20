@@ -106,9 +106,7 @@
   opr: _ @append_input_softline @prepend_input_softline
 )
 
-(assignment
-  opr: _ @prepend_space
-)
+(assignment opr: _ @prepend_space)
 
 (where_command
   opr: _ @append_input_softline @prepend_input_softline
@@ -187,17 +185,9 @@
   type: _
 )
 
-(decl_use
-  (_) @prepend_space
-)
-
-(decl_extern
-  (_) @prepend_space
-)
-
-(decl_module
-  (_) @prepend_space
-)
+(decl_use (_) @prepend_space)
+(decl_extern (_) @prepend_space)
+(decl_module (_) @prepend_space)
 
 ;; new-line
 (comment) @prepend_input_softline @append_hardline
@@ -249,9 +239,7 @@
   (default_arm)? @prepend_spaced_softline
 )
 
-(ctrl_do
-  (_) @prepend_space
-)
+(ctrl_do (_) @prepend_space)
 
 ;; data structures
 (command_list
