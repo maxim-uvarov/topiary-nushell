@@ -8,8 +8,11 @@ extern hi [name: string --long (-s) # flags
 # env
 hide-env   ABC
 with-env {ABC: 'hello'} {
+  (
 do -i --env {|foo, bar | print $env.ABC
-  } foo bar
+  }
+  foo bar
+ )
 }
 
 # closure

@@ -241,7 +241,7 @@
   (default_arm)? @prepend_spaced_softline
 )
 
-(ctrl_do (_) @prepend_space)
+(ctrl_do (_) @prepend_input_softline)
 
 ;; data structures
 (command_list
