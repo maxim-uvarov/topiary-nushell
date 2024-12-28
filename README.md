@@ -27,7 +27,28 @@ while the latest release of topiary-cli still uses the other way.
 
 ## usage
 
-`topiary format script.nu`
++ `topiary format script.nu`
++ neovim: format on save with [conform.nvim](https://github.com/stevearc/conform.nvim):
+
+```lua
+-- lazy.nvim setup
+{
+  "stevearc/conform.nvim",
+  dependencies = { "mason.nvim" },
+  event = "VeryLazy",
+  opts = {
+    formatters_by_ft = {
+      nu = { "topiary_nu" },
+    },
+    formatters = {
+      topiary_nu = {
+        command = "topiary",
+        args = { "format", "--language", "nu" },
+      },
+    },
+  },
+},
+```
 
 ## contribute
 
