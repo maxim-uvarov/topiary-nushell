@@ -279,9 +279,9 @@
 
 ;; match_arm
 (val_list
-  item: _ @append_space
+  entry: _ @append_space
   .
-  item: _ @prepend_spaced_softline
+  entry: _ @prepend_spaced_softline
 )
 
 (val_table
