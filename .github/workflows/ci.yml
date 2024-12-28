@@ -27,6 +27,6 @@ jobs:
       - name: Install topiary-cli
         run: |
           cd topiary
-          cargo install --path topiary-cli
+          topiary --version || cargo install --path topiary-cli
       - name: Run tests
         run: nu run_test.nu
