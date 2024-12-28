@@ -30,5 +30,6 @@ export def test_format [
         break
       }
     }
+    rm $target
   }
 }
