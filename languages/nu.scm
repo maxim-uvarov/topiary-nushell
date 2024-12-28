@@ -207,6 +207,9 @@
   (_) @prepend_end_scope @prepend_input_softline
   (#scope_id! "consecutive_scope")
 )
+(block
+  "{" @append_space
+  "}" @prepend_space)
 
 (val_closure
   (_) @append_begin_scope
@@ -214,6 +217,12 @@
   (_) @prepend_end_scope @prepend_input_softline
   (#scope_id! "consecutive_scope")
 )
+(val_closure
+  "{" @append_space
+  .
+  (parameter_pipes)? @do_nothing
+)
+(val_closure "}" @prepend_space)
 
 ;; control flow
 (ctrl_if
@@ -268,8 +277,11 @@
   entry: _ @prepend_spaced_softline
 )
 
+;; match_arm
 (val_list
-  item: _ @append_space @prepend_spaced_softline
+  item: _ @append_space
+  .
+  item: _ @prepend_spaced_softline
 )
 
 (val_table
@@ -277,11 +289,15 @@
 )
 
 (val_record
-  entry: (record_entry) @append_space @prepend_spaced_softline
+  entry: (record_entry) @append_space
+  .
+  entry: (record_entry) @prepend_spaced_softline
 )
 
 (record_body
-  entry: (record_entry) @append_space @prepend_spaced_softline
+  entry: (record_entry) @append_space
+  .
+  entry: (record_entry) @prepend_spaced_softline
 )
 
 (collection_type
