@@ -40,9 +40,17 @@ export def test_format [
   path: path # path to test
   break: bool = false # break on first error
 ] {
-  let files = glob $'($path | str trim -r -c '/')/**/*.nu'
+  let files = if ($path | path type) == 'file' {
+    [$path]
+  } else {
+    glob $'($path | str trim -r -c '/')/**/*.nu'
+  }
   let target = "./test.nu"
   let len = $files | length
+  if $len == 0 {
+    print $"No nu scripts found in (ansi yellow)($path).(ansi reset)"
+    return
+  }
   $env.format_detected_error = false
   for i in 1..$len {
     let file = $files | get ($i - 1)
@@ -66,6 +74,6 @@ export def test_format [
   }
   if not $env.format_detected_error {
     print ''
-    print $"(ansi green)All nu scripts successfully passed the check, but style issues are still possible."
+    print $"(ansi green)All nu scripts successfully passed the check, but style issues are still possible.(ansi reset)"
   }
 }
