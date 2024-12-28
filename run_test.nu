@@ -9,7 +9,7 @@ $env.TOPIARY_CONFIG_FILE = (pwd | path join languages.ncl)
 $env.TOPIARY_LANGUAGE_DIR = (pwd | path join languages)
 
 for f in $files {
-  print $"Testing: (ansi green_bold)($f)(ansi reset)"
+  print $"(ansi green)Testing: (ansi yellow)($f)(ansi reset)"
   cp $f $temp_file
   topiary format $temp_file
   let expected_file = $f | str replace --regex '/input_' '/expected_'

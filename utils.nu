@@ -26,7 +26,12 @@ def print_progress [
   let done = '▓'
   let empty = '░'
   let count = [1 (($ratio * $length) | into int)] | math max
-  print -n (str_repeat $done $count) (str_repeat $empty ($length - $count)) ($ratio * 100 | into string --decimals 0) %
+  (
+    print -n
+    (str_repeat $done $count)
+    (str_repeat $empty ($length - $count))
+    ($ratio * 100 | into string --decimals 0) %
+  )
 }
 
 # Test the topiary formatter with all nu files within a directory
@@ -38,6 +43,7 @@ export def test_format [
   let files = glob $'($path | str trim -r -c '/')/**/*.nu'
   let target = "./test.nu"
   let len = $files | length
+  $env.format_detected_error = false
   for i in 1..$len {
     let file = $files | get ($i - 1)
     print_progress ($i / $len)
@@ -49,11 +55,17 @@ export def test_format [
       let err_after = run_ide_check $target
       assert ($err_before == $err_after)
     } catch {
-      print $file
+      $env.format_detected_error = true
+      print $"(ansi red)Error detected: (ansi yellow)($file)(ansi reset)"
       if $break {
+        rm $target
         break
       }
     }
     rm $target
+  }
+  if not $env.format_detected_error {
+    print ''
+    print $"(ansi green)All nu scripts successfully passed the check, but style issues are still possible."
   }
 }
