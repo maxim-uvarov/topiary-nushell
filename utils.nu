@@ -11,14 +11,6 @@ def run_ide_check [
   | reject start end
 }
 
-def str_repeat [
-  char: string
-  count: int
-] {
-  if $count < 1 { return '' }
-  1..$count | each { $char } | str join
-}
-
 def print_progress [
   ratio: float
   length: int = 20
@@ -28,8 +20,8 @@ def print_progress [
   let count = [1 (($ratio * $length) | into int)] | math max
   (
     print -n
-    (str_repeat $done $count)
-    (str_repeat $empty ($length - $count))
+    ('' | fill -c $done -w $count)
+    ('' | fill -c $empty -w ($length - $count))
     ($ratio * 100 | into string --decimals 0) %
   )
 }
@@ -38,42 +30,41 @@ def print_progress [
 # each script should pass the idempotent check as well as the linter
 export def test_format [
   path: path # path to test
-  break: bool = false # break on first error
 ] {
   let files = if ($path | path type) == 'file' {
     [$path]
   } else {
     glob $'($path | str trim -r -c '/')/**/*.nu'
   }
-  let target = "./test.nu"
   let len = $files | length
   if $len == 0 {
     print $"No nu scripts found in (ansi yellow)($path).(ansi reset)"
     return
   }
-  $env.format_detected_error = false
-  for i in 1..$len {
+  let all_passed = 1..$len | par-each {|i|
     let file = $files | get ($i - 1)
-    print_progress ($i / $len)
-    print -n $"(ansi -e '1000D')"
-    try {
+    let target = $"(random uuid).nu"
+    if ($i mod 10) == 0 {
+      print -n $"(ansi -e '1000D')"
+      print_progress ($i / $len)
+    }
+    let failed = try {
       cp $file $target
       let err_before = run_ide_check $target
       topiary format $target
       let err_after = run_ide_check $target
       assert ($err_before == $err_after)
+      true
     } catch {
-      $env.format_detected_error = true
       print $"(ansi red)Error detected: (ansi yellow)($file)(ansi reset)"
-      if $break {
-        rm $target
-        break
-      }
+      false
     }
     rm $target
+    $failed
   }
-  if not $env.format_detected_error {
-    print ''
+  | all { $in }
+  if $all_passed {
+    print -n $"(ansi -e '1000D')"
     print $"(ansi green)All nu scripts successfully passed the check, but style issues are still possible.(ansi reset)"
   }
 }
