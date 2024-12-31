@@ -4,7 +4,7 @@
 * [Topiary](https://github.com/tweag/topiary): tree-sitter based uniform formatter
 * This repo contains:
   - languages.ncl: configuration that enables nushell
-  - nushell.scm: tree-sitter query DSL that defines the behavior of formatter for nushell
+  - nu.scm: tree-sitter query DSL that defines the behavior of the formatter for nushell
   - stand-alone tests written in nushell
 
 ## setup
