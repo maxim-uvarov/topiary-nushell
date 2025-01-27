@@ -122,6 +122,16 @@
   (_)
 )
 
+;; FIXME: temp workaround for the whitespace issue
+(hide_env
+  [
+    (short_flag)
+    (long_flag)
+  ] @append_antispace
+  .
+  (_)
+)
+
 ;; indentation
 [
   "["
