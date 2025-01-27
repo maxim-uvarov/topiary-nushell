@@ -18,7 +18,6 @@
 ;; keep empty lines
 (_) @allow_blank_line_before
 
-;; FIXME: temp workaround for the whitespace issue
 [
   ":"
   ";"
@@ -31,17 +30,16 @@
 ] @append_space
 
 [
+  "="
   (match_guard)
   (short_flag)
   (long_flag)
 ] @prepend_space
 
-(decl_alias "=" @prepend_space)
-(stmt_let "=" @prepend_space)
-(stmt_mut "=" @prepend_space)
-(stmt_const "=" @prepend_space)
-
-(param_value "=" @append_space @prepend_space)
+;; FIXME: temp workaround for the whitespace issue
+(short_flag "=" @prepend_antispace)
+(long_flag "=" @prepend_antispace)
+(param_value "=" @append_space)
 
 (assignment
   opr: _
