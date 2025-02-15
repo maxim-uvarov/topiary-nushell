@@ -46,11 +46,7 @@
   rhs: (pipeline
     (pipe_element
       (val_string
-        (raw_string_begin)
-      )
-    )
-  ) @prepend_space
-)
+        (raw_string_begin)))) @prepend_space)
 
 (
   "="
@@ -58,11 +54,7 @@
   (pipeline
     (pipe_element
       (val_string
-        (raw_string_begin)
-      )
-    )
-  ) @prepend_space
-)
+        (raw_string_begin)))) @prepend_space)
 
 [
   "->"
@@ -96,19 +88,16 @@
 ] @prepend_space @append_space
 
 (pipeline
-  "|" @append_space @prepend_input_softline
-)
+  "|" @append_space @prepend_input_softline)
 
 ;; add spaces to left & right sides of operators
 (expr_binary
-  opr: _ @append_input_softline @prepend_input_softline
-)
+  opr: _ @append_input_softline @prepend_input_softline)
 
 (assignment opr: _ @prepend_space)
 
 (where_command
-  opr: _ @append_input_softline @prepend_input_softline
-)
+  opr: _ @append_input_softline @prepend_input_softline)
 
 ;; special flags
 (
@@ -117,8 +106,7 @@
     (long_flag)
   ] @append_space
   .
-  (_)
-)
+  (_))
 
 ;; FIXME: temp workaround for the whitespace issue
 (hide_env
@@ -127,8 +115,7 @@
     (long_flag)
   ] @append_antispace
   .
-  (_)
-)
+  (_))
 
 ;; indentation
 [
@@ -150,29 +137,32 @@
 (
   "{" @append_empty_softline
   .
-  (parameter_pipes)? @do_nothing
-)
+  (parameter_pipes)? @do_nothing)
 
 ;; space/newline between parameters
 (parameter_pipes
   (
     (parameter) @append_space
     .
-    (parameter)
-  )?
-) @append_space @append_spaced_softline
+    (parameter))?) @append_space @append_spaced_softline
 
 (parameter_bracks
   (parameter) @append_space
   .
-  (parameter) @prepend_empty_softline
-)
+  (parameter) @prepend_empty_softline)
 
 (parameter
   param_long_flag: _? @prepend_space
   .
-  flag_capsule: _? @prepend_space
-)
+  flag_capsule: _? @prepend_space)
+
+;; attributes
+(attribute
+  (attribute_identifier)
+  (_)? @prepend_space) @append_hardline
+
+(attribute_list
+  ";" @delete @append_hardline)
 
 ;; declarations
 (decl_def
@@ -180,18 +170,15 @@
   quoted_name: _? @prepend_space @append_space
   unquoted_name: _? @prepend_space @append_space
   (returns)?
-  (block) @prepend_space
-)
+  (block) @prepend_space)
 
 (returns
-  ":"? @do_nothing
-) @prepend_space
+  ":"? @do_nothing) @prepend_space
 
 (returns
   type: _ @append_space
   .
-  type: _
-)
+  type: _)
 
 (decl_use (_) @prepend_space)
 (decl_extern (_) @prepend_space)
@@ -206,15 +193,14 @@
   (_) @append_begin_scope
   .
   (_) @prepend_end_scope @prepend_input_softline
-  (#scope_id! "consecutive_scope")
-)
+  (#scope_id! "consecutive_scope"))
 
 (block
   (_) @append_begin_scope
   .
   (_) @prepend_end_scope @prepend_input_softline
-  (#scope_id! "consecutive_scope")
-)
+  (#scope_id! "consecutive_scope"))
+
 (block
   "{" @append_space
   "}" @prepend_space)
@@ -223,13 +209,13 @@
   (_) @append_begin_scope
   .
   (_) @prepend_end_scope @prepend_input_softline
-  (#scope_id! "consecutive_scope")
-)
+  (#scope_id! "consecutive_scope"))
+
 (val_closure
   "{" @append_space
   .
-  (parameter_pipes)? @do_nothing
-)
+  (parameter_pipes)? @do_nothing)
+
 (val_closure "}" @prepend_space)
 
 ;; control flow
@@ -237,26 +223,22 @@
   "if" @append_space
   condition: _ @append_space
   then_branch: _
-  "else"? @prepend_input_softline
-)
+  "else"? @prepend_input_softline)
 
 (ctrl_for
   "for" @append_space
   "in" @prepend_space @append_space
-  body: _ @prepend_space
-)
+  body: _ @prepend_space)
 
 (ctrl_while
   "while" @append_space
-  condition: _ @append_space
-)
+  condition: _ @append_space)
 
 (ctrl_match
   "match" @append_space
   scrutinee: _? @append_space
   (match_arm)? @prepend_spaced_softline
-  (default_arm)? @prepend_spaced_softline
-)
+  (default_arm)? @prepend_spaced_softline)
 
 (ctrl_do (_) @prepend_input_softline)
 
@@ -265,15 +247,13 @@
   [
     (cmd_identifier)
     (val_string)
-  ] @append_space @prepend_spaced_softline
-)
+  ] @append_space @prepend_spaced_softline)
 
 (command
   flag: _? @prepend_input_softline
   arg_str: _? @prepend_input_softline
   arg_spread: _? @prepend_input_softline
-  arg: _? @prepend_input_softline
-)
+  arg: _? @prepend_input_softline)
 
 (redirection
   file_path: _? @prepend_input_softline
@@ -282,35 +262,29 @@
 (list_body
   entry: _ @append_space
   .
-  entry: _ @prepend_spaced_softline
-)
+  entry: _ @prepend_spaced_softline)
 
 ;; match_arm
 (val_list
   entry: _ @append_space
   .
-  entry: _ @prepend_spaced_softline
-)
+  entry: _ @prepend_spaced_softline)
 
 (val_table
-  row: _ @prepend_spaced_softline
-)
+  row: _ @prepend_spaced_softline)
 
 (val_record
   entry: (record_entry) @append_space
   .
-  entry: (record_entry) @prepend_spaced_softline
-)
+  entry: (record_entry) @prepend_spaced_softline)
 
 (record_body
   entry: (record_entry) @append_space
   .
-  entry: (record_entry) @prepend_spaced_softline
-)
+  entry: (record_entry) @prepend_spaced_softline)
 
 (collection_type
   type: _ @append_delimiter
   .
   key: _ @prepend_space
-  (#delimiter! ",")
-)
+  (#delimiter! ","))
