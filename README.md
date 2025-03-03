@@ -30,7 +30,10 @@ $env.TOPIARY_LANGUAGE_DIR = ($env.XDG_CONFIG_HOME | path join topiary languages)
 ## usage
 
 + `topiary format script.nu`
-+ neovim: format on save with [conform.nvim](https://github.com/stevearc/conform.nvim):
+
+### neovim
+
+Format on save with [conform.nvim](https://github.com/stevearc/conform.nvim):
 
 ```lua
 -- lazy.nvim setup
