@@ -55,6 +55,17 @@ Format on save with [conform.nvim](https://github.com/stevearc/conform.nvim):
 },
 ```
 
+### helix
+
+To format on save in Helix, add this configuration to your `helix/languages.toml`.
+
+```toml
+[[language]]
+name = "nu"
+auto-format = true
+formatter = { command = "topiary", args = ["format", "--language", "nu"] }
+```
+
 ## contribute
 
 Help to find format issues with following method (dry-run, detects parsing/idempotence/semantic breaking):
