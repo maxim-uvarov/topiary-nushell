@@ -17,6 +17,7 @@
 
 ```nushell
 # install topiary-cli (0.6.0+ suggested)
+# for example, installing with cargo
 cargo install --git https://github.com/tweag/topiary topiary-cli
 
 # clone this repo to `$env.XDG_CONFIG_HOME/topiary`
