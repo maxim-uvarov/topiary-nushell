@@ -15,15 +15,18 @@
 
 ## setup
 
-1. install topiary-cli (0.6.0+ suggested)
-2. clone this repo to `$env.XDG_CONFIG_HOME/topiary`
-3. set environment variables
-
 ```nushell
+# install topiary-cli (0.6.0+ suggested)
+cargo install --git https://github.com/tweag/topiary topiary-cli
+
+# clone this repo to `$env.XDG_CONFIG_HOME/topiary`
+git clone https://github.com/blindFS/topiary-nushell ($env.XDG_CONFIG_HOME | path join topiary)
+
+# set environment variables
 $env.TOPIARY_CONFIG_FILE = ($env.XDG_CONFIG_HOME | path join topiary languages.ncl)
 $env.TOPIARY_LANGUAGE_DIR = ($env.XDG_CONFIG_HOME | path join topiary languages)
-
 ```
+
 ## usage
 
 + `topiary format script.nu`
