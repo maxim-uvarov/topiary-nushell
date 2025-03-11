@@ -5,5 +5,5 @@ overlay new name
 overlay hide spam --keep-custom
 hide PWD
 hide-env PWD
-hide-env -i PWD
+hide-env -i PWD PATH
 source-env foo.nu

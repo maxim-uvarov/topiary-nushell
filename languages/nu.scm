@@ -117,6 +117,11 @@
   .
   (_))
 
+(hide_env
+  (identifier) @append_space
+  .
+  (identifier))
+
 ;; indentation
 [
   "["
