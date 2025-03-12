@@ -3,6 +3,7 @@ overlay  hide  spam
 overlay  list
 overlay  new name
 overlay hide spam --keep-custom
+overlay hide --keep-env   [PWD]   new_name
 hide PWD
 hide-env PWD
 hide-env -i PWD  PATH

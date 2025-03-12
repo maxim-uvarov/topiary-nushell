@@ -108,6 +108,9 @@
   .
   (_))
 
+(overlay_hide
+  overlay: _ @prepend_space)
+
 ;; FIXME: temp workaround for the whitespace issue
 (hide_env
   [
