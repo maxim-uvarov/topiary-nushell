@@ -1,4 +1,4 @@
-# Add nushell support to Topiary
+# Format nushell with Topiary
 [![Build Status](https://img.shields.io/github/actions/workflow/status/blindfs/topiary-nushell/ci.yml?branch=main)](https://github.com/blindfs/topiary-nushell/actions)
 
 * [Topiary](https://github.com/tweag/topiary): tree-sitter based uniform formatter
@@ -7,37 +7,94 @@
   - nu.scm: tree-sitter query DSL that defines the behavior of the formatter for nushell
   - stand-alone tests written in nushell
 
-## status
+## Status
 
-* Supposed to work well with all language features of latest nushell
-  - Note: there're corner cases that `tree-sitter-nu` would fail with errors, if you encounter them, please open an issue [there](https://github.com/nushell/tree-sitter-nu).
-  - If you encounter any style/format issue other than parsing error, please report in this repo, any feedback is appreciated.
+* Supposed to work well with all language features of latest nushell (0.103)
 
-## setup
+> [!NOTE]
+> - There're corner cases where `tree-sitter-nu` would fail with parsing errors, if you encounter them, please open an issue [there](https://github.com/nushell/tree-sitter-nu).
+> - If you encounter any style/format issue, please report in this repo, any feedback is appreciated.
+
+## Setup
+
+1. Install topiary-cli using whatever package-manager on your system (0.6.0+ suggested)
+```nushell
+# e.g. installing with cargo
+cargo install --git https://github.com/tweag/topiary topiary-cli
+```
+2. Clone this repo somewhere
+```nushell
+# e.g. to `$env.XDG_CONFIG_HOME/topiary`
+git clone https://github.com/blindFS/topiary-nushell ($env.XDG_CONFIG_HOME | path join topiary)
+```
+3. Setup environment variables (Optional)
+
+> [!TIP]
+> This is required if you want to do the formatting via vanilla topiary-cli, like in the neovim/helix settings below.
+> 
+> While the [`format.nu`](https://github.com/blindFS/topiary-nushell/blob/main/format.nu) script in this repo just wraps that for you.
 
 ```nushell
-# install topiary-cli (0.6.0+ suggested)
-# for example, installing with cargo
-cargo install --git https://github.com/tweag/topiary topiary-cli
-
-# clone this repo to `$env.XDG_CONFIG_HOME/topiary`
-git clone https://github.com/blindFS/topiary-nushell ($env.XDG_CONFIG_HOME | path join topiary)
-
-# set environment variables
+# Set environment variables according to the path of the clone
 $env.TOPIARY_CONFIG_FILE = ($env.XDG_CONFIG_HOME | path join topiary languages.ncl)
 $env.TOPIARY_LANGUAGE_DIR = ($env.XDG_CONFIG_HOME | path join topiary languages)
 ```
 
-## usage
+## Usage
 
-```nushell
-topiary format script.nu
+<details>
+  <summary>Using the <a href="https://github.com/blindFS/topiary-nushell/blob/main/format.nu">format.nu</a> wrapper </summary>
+  
+```markdown
+Helper to run topiary with the correct environment variables for topiary-nushell
+
+Usage:
+  > format.nu {flags} ...(files)
+
+Flags:
+  -c, --config_dir <path>: Root of the topiary-nushell repo, defaults to the parent directory of this script
+  -h, --help: Display the help message for this command
+
+Parameters:
+  ...files <path>: Files to format
+
+Input/output types:
+  ╭───┬─────────┬─────────╮
+  │ # │  input  │ output  │
+  ├───┼─────────┼─────────┤
+  │ 0 │ nothing │ nothing │
+  │ 1 │ string  │ string  │
+  ╰───┴─────────┴─────────╯
+
+Examples:
+  Read from stdin
+  > bat foo.nu | format.nu
+
+  Format files (in-place replacement)
+  > format.nu foo.nu bar.nu
+
+  Path overriding
+  > format.nu -c /path/to/topiary-nushell foo.nu bar.nu
 ```
+</details>
 
-### neovim
+<details>
+  <summary>Using topiary-cli </summary>
+  
+```nushell
+# in-place formatting
+topiary format script.nu
+# stdin -> stdout
+cat foo.nu | topiary format --language nu
+```
+</details>
 
-Format on save with [conform.nvim](https://github.com/stevearc/conform.nvim):
+## Editor Integration
 
+<details>
+  <summary>Neovim </summary>
+  Format on save with <a href="https://github.com/stevearc/conform.nvim">conform.nvim</a>:
+  
 ```lua
 -- lazy.nvim setup
 {
@@ -57,8 +114,10 @@ Format on save with [conform.nvim](https://github.com/stevearc/conform.nvim):
   },
 },
 ```
+</details>
 
-### helix
+<details>
+  <summary>Helix </summary>
 
 To format on save in Helix, add this configuration to your `helix/languages.toml`.
 
@@ -68,12 +127,33 @@ name = "nu"
 auto-format = true
 formatter = { command = "topiary", args = ["format", "--language", "nu"] }
 ```
+</details>
 
-## contribute
+<details>
+  <summary>Zed </summary>
 
-Help to find format issues with following method (dry-run, detects parsing/idempotence/semantic breaking):
+```json
+"languages": {
+  "Nu": {
+    "formatter": {
+      "external": {
+        "command": "/path-to-the-clone/format.nu"
+      }
+    },
+    "format_on_save": "on"
+  }
+}
+```
+</details>
+
+## Contribute
+
+> [!IMPORTANT]
+> Help to find format issues with following method
+> (dry-run, detects parsing/idempotence/semantic breaking):
 
 ```nushell
 source toolkit.nu
 test_format <root-path-of-your-nushell-scripts>
 ```
+
