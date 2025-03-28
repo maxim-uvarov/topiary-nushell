@@ -29,7 +29,7 @@ git clone https://github.com/blindFS/topiary-nushell ($env.XDG_CONFIG_HOME | pat
 ```
 3. Setup environment variables (Optional)
 
-> [!TIP]
+> [!WARNING]
 > This is required if you want to do the formatting via vanilla topiary-cli, like in the neovim/helix settings below.
 > 
 > While the [`format.nu`](https://github.com/blindFS/topiary-nushell/blob/main/format.nu) script in this repo just wraps that for you.
