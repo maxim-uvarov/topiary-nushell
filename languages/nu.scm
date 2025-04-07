@@ -125,6 +125,11 @@
   .
   (identifier))
 
+(hide_mod
+  (_) @append_space
+  .
+  (_))
+
 ;; indentation
 [
   "["
