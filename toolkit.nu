@@ -1,5 +1,9 @@
 use std assert
 
+const script_pwd = path self .
+$env.TOPIARY_CONFIG_FILE = ($script_pwd | path join languages.ncl)
+$env.TOPIARY_LANGUAGE_DIR = ($script_pwd | path join languages)
+
 def run_ide_check [
   file: path
 ] {
