@@ -1,8 +1,6 @@
 use std assert
 
 const script_pwd = path self .
-$env.TOPIARY_CONFIG_FILE = ($script_pwd | path join languages.ncl)
-$env.TOPIARY_LANGUAGE_DIR = ($script_pwd | path join languages)
 
 def run_ide_check [
   file: path
@@ -35,6 +33,8 @@ def print_progress [
 export def test_format [
   path: path # path to test
 ] {
+  $env.TOPIARY_CONFIG_FILE = ($script_pwd | path join languages.ncl)
+  $env.TOPIARY_LANGUAGE_DIR = ($script_pwd | path join languages)
   let files = if ($path | path type) == 'file' {
     [$path]
   } else {
